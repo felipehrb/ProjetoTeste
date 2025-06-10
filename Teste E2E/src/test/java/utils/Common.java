@@ -141,12 +141,12 @@ public class Common {
 			WebElement element = findElement(driver, selector, selectorName, time);
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript(
-					 "arguments[0].focus();" +
-							    "arguments[0].value = arguments[1];" +
-							    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
-							    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));" +
-							    "arguments[0].blur();",  // Remove focus (as if user pressed Tab)
-							     element, value
+				"arguments[0].focus();" +
+			    "arguments[0].value = arguments[1];" +
+			    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+			    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));" +
+			    "arguments[0].blur();",
+			     element, value
 			);			
 			return true;
 		}catch (WebDriverException e) {
