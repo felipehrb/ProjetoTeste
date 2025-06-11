@@ -18,11 +18,29 @@ public class CheckoutPage {
     }
 
     public void efetuarCheckout(String firstName, String lastName, String postalCode) { 
-    	Common.waitForPageLoad(driver, 30);  	
+    	Common.waitForPageLoad(driver, 30); 
+    	Common.WaitBeClickable(driver, "ID", "continue", 5);
+    	preencheCheckout(firstName, lastName, postalCode);
+    	assertTrue(validaCheckou(firstName, lastName, postalCode, 4));
+    	assertTrue(Common.clickJsElement(driver, "ID", "continue", 5, true));
+    }
+    
+    private void preencheCheckout(String firstName, String lastName, String postalCode) {
     	assertTrue(Common.typeElement(driver, "ID", "first-name", 5, firstName, true));
     	assertTrue(Common.typeElement(driver, "ID", "last-name", 5, lastName, true));
-    	assertTrue(Common.typeElement(driver, "ID", "postal-code", 5, postalCode, true));  
-    	assertTrue(Common.clickJsElement(driver, "ID", "continue", 5, true));  	
+    	assertTrue(Common.typeElement(driver, "ID", "postal-code", 5, postalCode, true));
+    }
+    
+    private boolean validaCheckou(String firstName, String lastName, String postalCode, int tentativas) {
+    	if(tentativas > 0 && (!Common.getValue(driver, "ID", "first-name", 5).equals(firstName)
+    		|| !Common.getValue(driver, "ID", "last-name", 5).equals(lastName)
+    		|| !Common.getValue(driver, "ID", "postal-code", 5).equals(postalCode)))
+    	{
+        	preencheCheckout(firstName, lastName, postalCode);
+    		return validaCheckou(firstName, lastName, postalCode, tentativas-1);
+    	}
+    	
+    	return tentativas > 0;
     }
     
     public void validarPreco(String price) {
