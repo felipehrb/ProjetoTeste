@@ -13,6 +13,15 @@ import utils.Common;
 public class CheckoutPage {
     WebDriver driver;
 
+    private String firstNameInput = "first-name";
+    private String lastNameInput = "last-name";
+    private String postalCodeInput = "postal-code";
+    private String continueButton = "continue";
+    private String finishButton = "finish";
+    private String mensagemCheckout = "//h2[@class='complete-header']";
+    private String itemCard = "//div[@class='cart_item']";
+    private String summaryTotal = "div[class='summary_total_label']";
+    
     public CheckoutPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -22,19 +31,19 @@ public class CheckoutPage {
     	Common.WaitBeClickable(driver, "ID", "continue", 5);
     	preencheCheckout(firstName, lastName, postalCode);
     	assertTrue(validaCheckou(firstName, lastName, postalCode, 4));
-    	assertTrue(Common.clickJsElement(driver, "ID", "continue", 5, true));
+    	assertTrue(Common.clickJsElement(driver, "ID", continueButton, 5, true));
     }
     
     private void preencheCheckout(String firstName, String lastName, String postalCode) {
-    	assertTrue(Common.typeElement(driver, "ID", "first-name", 5, firstName, true));
-    	assertTrue(Common.typeElement(driver, "ID", "last-name", 5, lastName, true));
-    	assertTrue(Common.typeElement(driver, "ID", "postal-code", 5, postalCode, true));
+    	assertTrue(Common.typeElement(driver, "ID", firstNameInput, 5, firstName, true));
+    	assertTrue(Common.typeElement(driver, "ID", lastNameInput, 5, lastName, true));
+    	assertTrue(Common.typeElement(driver, "ID", postalCodeInput, 5, postalCode, true));
     }
     
     private boolean validaCheckou(String firstName, String lastName, String postalCode, int tentativas) {
-    	if(tentativas > 0 && (!Common.getValue(driver, "ID", "first-name", 5).equals(firstName)
-    		|| !Common.getValue(driver, "ID", "last-name", 5).equals(lastName)
-    		|| !Common.getValue(driver, "ID", "postal-code", 5).equals(postalCode)))
+    	if(tentativas > 0 && (!Common.getValue(driver, "ID", firstNameInput, 5).equals(firstName)
+    		|| !Common.getValue(driver, "ID", lastNameInput, 5).equals(lastName)
+    		|| !Common.getValue(driver, "ID", postalCodeInput, 5).equals(postalCode)))
     	{
         	preencheCheckout(firstName, lastName, postalCode);
     		return validaCheckou(firstName, lastName, postalCode, tentativas-1);
@@ -44,19 +53,19 @@ public class CheckoutPage {
     }
     
     public void validarPreco(String price) {
-    	WebElement element = Common.findElement(driver, "CSS", "div[class='summary_total_label']", 5);
+    	WebElement element = Common.findElement(driver, "CSS", summaryTotal, 5);
         assertNotNull(element);
         assertTrue(element.getText().contains(price));
     }
 
     public void finalizarCheckout() {
-    	assertTrue(Common.clickElement(driver, "ID", "finish", 10, true));
-    	WebElement element = Common.findElement(driver, "XPATH", "//h2[@class='complete-header']", 5);
+    	assertTrue(Common.clickElement(driver, "ID", finishButton, 10, true));
+    	WebElement element = Common.findElement(driver, "XPATH", mensagemCheckout, 5);
         assertNotNull(element);
         assertTrue(element.getText().contains("Thank you for your order!"));
     }
     
     public void ValidoQuantidade(int qntd) {
-    	assertEquals(Common.countElements(driver, "XPATH", "//div[@class='cart_item']", 60), qntd);    	
+    	assertEquals(Common.countElements(driver, "XPATH", itemCard, 60), qntd);    	
     }
 }

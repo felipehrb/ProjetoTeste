@@ -1,8 +1,11 @@
 package steps;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import pages.*;
@@ -14,9 +17,16 @@ public class CheckoutSteps {
     ProdutosPage ProdutosPage = new ProdutosPage(driver);
     CheckoutPage CheckoutPage = new CheckoutPage(driver);
 
-    @When("Adiciono o produto {string} no carrinho")
-    public void Eu_abro_a_pagina_de_login(String produto) {
-    	ProdutosPage.adicionarCarrinho(produto);
+    @When("Adiciono os produtos no carrinho:")
+    public void adicionoOsProdutosNoCarrinho(DataTable produtos) {
+        List<String> listaDeProdutos = produtos.asList();
+
+        for (String produto : listaDeProdutos) {
+        	if(produto == null) {
+        		continue;
+        	}
+            ProdutosPage.adicionarCarrinho(produto);
+        }
     }
 
     @When("Clico em ir para carrinho")

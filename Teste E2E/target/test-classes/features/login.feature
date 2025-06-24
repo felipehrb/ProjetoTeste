@@ -1,17 +1,12 @@
 Feature: Login and navigate
 
-  Scenario: Logar com sucesso e validar pagina incial
+  Scenario Outline: Realizar login e validar resultado
     Given Eu abro a pagina de login
-    When Eu logo com usuario "standard_user" e senha "secret_sauce"
-    Then Devo ser direcionado para pagina de produtos
-    
-  Scenario: Logar com falha usuario incorreto
-    Given Eu abro a pagina de login
-    When Eu logo com usuario "standard_userd" e senha "secret_sauce"
-    Then Devo receber mensagem "Username and password do not match any user in this service"
-    
-    
-  Scenario: Logar com falha senha incorreto
-    Given Eu abro a pagina de login
-    When Eu logo com usuario "standard_user" e senha "secret_sauc"
-    Then Devo receber mensagem "Username and password do not match any user in this service"
+    When Eu logo com usuario "<usuario>" e senha "<senha>"
+    Then <resultado>
+
+    Examples:
+      | usuario         | senha         | resultado                                                                 |
+      | standard_user   | secret_sauce  | Devo ser direcionado para pagina de produtos                              |
+      | standard_userd  | secret_sauce  | Devo receber mensagem "Username and password do not match any user in this service" |
+      | standard_user   | secret_sauc   | Devo receber mensagem "Username and password do not match any user in this service" |

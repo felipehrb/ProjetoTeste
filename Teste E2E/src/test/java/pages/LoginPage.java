@@ -13,18 +13,23 @@ import utils.Common;
 public class LoginPage {
     WebDriver driver;
 
+    private String userName = "user-name";
+    private String password = "password";
+    private String submitButton = "input[type='submit']";
+    private String mensagemErro = "//h3[@data-test='error']";
+    
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void login(String user, String pass) {
-        driver.findElement(By.id("user-name")).sendKeys(user);
-        driver.findElement(By.id("password")).sendKeys(pass);        
-        assertTrue(Common.clickElement(driver, "CSS", "input[type='submit']", 10));
+    	assertTrue(Common.typeElement(driver, "ID", userName, 5, user, true));
+    	assertTrue(Common.typeElement(driver, "ID", password, 5, pass, true));
+        assertTrue(Common.clickElement(driver, "CSS", submitButton, 10));
     }    
 
     public void valida(String mensagem) {
-        WebElement loggedMessage = Common.findElement(driver, "XPATH", "//h3[@data-test='error']", 5); 
+        WebElement loggedMessage = Common.findElement(driver, "XPATH", mensagemErro, 5); 
         assertNotNull(loggedMessage);
         assertTrue(loggedMessage.getText().contains(mensagem));
     }

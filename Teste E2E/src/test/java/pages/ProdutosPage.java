@@ -13,17 +13,22 @@ import utils.Common;
 public class ProdutosPage {
     WebDriver driver;
 
+    private String productsLabel = "//span[text()='Products']";
+    private String logoutBtn = "\"//a[@href='/logout']\"";
+    private String carrinhoBtn = "shopping_cart_container";
+    private String checkoutBtn = "checkout";
+    
     public ProdutosPage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void valida() {
-        WebElement loggedMessage = Common.findElement(driver, "XPATH", "//span[text()='Products']", 60); 
+        WebElement loggedMessage = Common.findElement(driver, "XPATH", productsLabel, 60); 
         assertNotNull(loggedMessage);
     }
     
     public void logout() {
-    	assertTrue(Common.clickElement(driver, "XPATH", "//a[@href='/logout']", 60));
+    	assertTrue(Common.clickElement(driver, "XPATH", logoutBtn, 60));
     }
 
     public void adicionarCarrinho(String produto) {
@@ -31,10 +36,10 @@ public class ProdutosPage {
     }
 
     public void irCarrinho() {
-    	assertTrue(Common.clickElement(driver, "ID", "shopping_cart_container", 60));
+    	assertTrue(Common.clickElement(driver, "ID", carrinhoBtn, 60));
     }
     
     public void irCheckout() {
-    	assertTrue(Common.clickElement(driver, "ID", "checkout", 60));
+    	assertTrue(Common.clickElement(driver, "ID", checkoutBtn, 60));
     }
 }
