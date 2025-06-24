@@ -4,10 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.github.javafaker.Faker;
+
+import faker.FakerFactory;
 import utils.Common;
 
 public class CheckoutPage {
@@ -28,7 +33,22 @@ public class CheckoutPage {
 
     public void efetuarCheckout(String firstName, String lastName, String postalCode) { 
     	Common.waitForPageLoad(driver, 30); 
-    	Common.WaitBeClickable(driver, "ID", "continue", 5);
+    	Common.WaitBeClickable(driver, "ID", continueButton, 5);
+    	preencheCheckout(firstName, lastName, postalCode);
+    	assertTrue(validaCheckou(firstName, lastName, postalCode, 4));
+    	assertTrue(Common.clickJsElement(driver, "ID", continueButton, 5, true));
+    }
+    
+    public void efetuarCheckoutDinamico() { 
+    	Faker faker = FakerFactory.get();    	
+    	
+    	Common.waitForPageLoad(driver, 30); 
+    	Common.WaitBeClickable(driver, "ID", continueButton, 5);
+    	
+    	String postalCode = String.valueOf(10000000 + new Random().nextInt(89999999));
+    	String firstName = faker.name().firstName();
+    	String lastName = faker.name().lastName();
+    	
     	preencheCheckout(firstName, lastName, postalCode);
     	assertTrue(validaCheckou(firstName, lastName, postalCode, 4));
     	assertTrue(Common.clickJsElement(driver, "ID", continueButton, 5, true));

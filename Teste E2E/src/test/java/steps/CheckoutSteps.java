@@ -48,6 +48,11 @@ public class CheckoutSteps {
     public void Preencho_as_informacoes_de_checkout_com(String firstName, String lastName, String zip) {
     	CheckoutPage.efetuarCheckout(firstName, lastName, zip);
     }
+    
+    @When("Preencho as informacoes de checkout com massa dinamica")
+    public void Preencho_as_informacoes_de_checkout_com_massa_dinamica() {
+    	CheckoutPage.efetuarCheckoutDinamico();
+    }
 
     @Then("Valido o preco total {string}")
     public void Valido_o_preco_total(String price) {

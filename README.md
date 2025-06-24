@@ -43,6 +43,9 @@ Foi utilizado Selenium Webdriver em Java e cucumber
 
 Para executar basta executar mvn test ou rodar o junit
 
+Report pasta:
+ProjetoTeste\Teste E2E\target\cucumber-report.html
+
 Dependências no pom:
 Java
 Selenium
