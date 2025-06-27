@@ -3,6 +3,7 @@ package steps;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 import pages.*;
+import utils.Config;
 import utils.Hooks;
 
 public class LoginSteps {
@@ -12,7 +13,7 @@ public class LoginSteps {
 
     @Given("Eu abro a pagina de login")
     public void Eu_abro_a_pagina_de_login() {
-        driver.get("https://www.saucedemo.com/");
+    	loginPage.open();
     }
 
     @When("Eu logo com usuario {string} e senha {string}")

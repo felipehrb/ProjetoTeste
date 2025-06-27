@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import utils.Common;
+import utils.Config;
 
 public class LoginPage {
     WebDriver driver;
@@ -22,6 +23,10 @@ public class LoginPage {
         this.driver = driver;
     }
 
+    public void open() {
+        driver.get(Config.get("base.url"));
+    }
+    
     public void login(String user, String pass) {
     	assertTrue(Common.typeElement(driver, "ID", userName, 5, user, true));
     	assertTrue(Common.typeElement(driver, "ID", password, 5, pass, true));
